@@ -1,0 +1,12 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: radial-gradient(closest-side at 50% 65%, #FF6347 20%, #2F2F2F 120%);
+}
