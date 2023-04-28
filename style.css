@@ -1,0 +1,33 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: radial-gradient(closest-side at 50% 65%, #FF6347 20%, #2F2F2F 120%);
+}
+
+.text-input {
+  width: 90%;
+  height: calc(100vh - 500px);
+  min-height: 250px;
+  margin: 30px auto 0;
+  padding: 10px;
+  border: solid 2px #ffffff;
+  border-radius: 5px;
+  font-size: 20px;
+  color: #ffffff;
+  background: #000000;
+  resize: none;
+}
+
+.keys-container {
+  width: 100%;
+  padding: 50px 0;
+  text-align: center;
+  user-select: none;
+}
