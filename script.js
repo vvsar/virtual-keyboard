@@ -30,6 +30,13 @@ const keySet = {
 const keyBoard = new Keyboard();
 
 function keyboardInit() {
+  if (localStorage.getItem('language')) {
+    keyBoard.language = localStorage.getItem('language');
+  } else {
+    keyBoard.language = 'en';
+    localStorage.setItem('language', 'en');
+  }
+
   keyBoard.textarea = document.createElement('textarea');
   keyBoard.textarea.classList.add('text-input');
   
