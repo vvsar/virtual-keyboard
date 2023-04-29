@@ -190,6 +190,14 @@ function createKeys() {
         case 'Space':
           keyElement.classList.add('keyboard-key-space');
           keyElement.innerHTML = key.createIcon('space_bar');
+          keyElement.addEventListener('click', () => {
+            const selectionStart = keyBoard.textarea.selectionStart;
+            const selectionEnd = keyBoard.textarea.selectionEnd;
+            keyBoard.textarea.value = `${keyBoard.textarea.value.slice(0, selectionStart)} ${keyBoard.textarea.value.slice(selectionEnd)}`;
+            keyBoard.textarea.selectionStart = selectionStart + 1;
+            keyBoard.textarea.selectionEnd = keyBoard.textarea.selectionStart;
+            keyBoard.textarea.focus();
+          });
           break;
 
         case 'ArrowLeft':
