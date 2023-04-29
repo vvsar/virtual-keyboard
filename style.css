@@ -74,3 +74,18 @@ body {
   left: 5px;
   color: #00FF00;
 }
+
+.keyboard-key-caps::after {
+  content: '';
+  top: 5px;
+  left: 20px;
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 50%;
+}
+
+.keyboard-key-caps-active::after {
+  background: #08ff00;
+}
