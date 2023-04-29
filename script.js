@@ -58,6 +58,19 @@ function keyboardInit() {
   keyBoard.keysContainer.appendChild(createKeys());
 }
 
+function toggleCapsLock() {
+  keyBoard.capsLock = !keyBoard.capsLock;
+  keyBoard.keysContainer.childNodes.forEach((el) => {
+    if (el.childElementCount === 0) {
+      if (keyBoard.capsLock) {
+        el.innerText = el.innerText.toUpperCase();
+      } else {
+        el.innerText = el.innerText.toLowerCase();
+      }
+    }
+  });
+}
+
 function createKeys() {
   const fragment = document.createDocumentFragment();
 
@@ -89,6 +102,12 @@ function createKeys() {
         case 'CapsLock':
           keyElement.classList.add('keyboard-key-wide', 'keyboard-key-caps');
           keyElement.innerHTML = '<span>CapsLock</span>';
+          if (keyBoard.capsLock) keyElement.classList.add('keyboard-key-caps-active');
+          keyElement.addEventListener('click', () => {
+            toggleCapsLock();
+            keyElement.classList.toggle('keyboard-key-caps-active', keyBoard.capsLock);
+            keyBoard.textarea.focus();
+          });
           break;
 
         case 'Del':
