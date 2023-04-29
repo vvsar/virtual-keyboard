@@ -56,6 +56,7 @@ function keyboardInit() {
   
   document.body.append(keyBoard.textarea, keyBoard.keysContainer)
   keyBoard.keysContainer.appendChild(createKeys());
+  keyBoard.textarea.focus();
 }
 
 function toggleCapsLock() {
