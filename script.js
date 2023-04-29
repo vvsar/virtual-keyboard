@@ -143,6 +143,22 @@ function createKeys() {
 
         case 'Del':
           keyElement.innerHTML = '<span>Del</span>';
+          keyElement.addEventListener('click', () => {
+            const selectionStart = keyBoard.textarea.selectionStart;
+            const selectionEnd = keyBoard.textarea.selectionEnd;
+            if (selectionStart === selectionEnd) {
+              keyBoard.textarea.value = keyBoard.textarea.value.slice(0, selectionStart)
+                  + keyBoard.textarea.value.slice(selectionEnd + 1);
+              keyBoard.textarea.selectionStart = selectionStart;
+              keyBoard.textarea.selectionEnd = keyBoard.textarea.selectionStart;
+            } else {
+              keyBoard.textarea.value = keyBoard.textarea.value.slice(0, selectionStart)
+                  + keyBoard.textarea.value.slice(selectionEnd);
+              keyBoard.textarea.selectionStart = selectionStart;
+              keyBoard.textarea.selectionEnd = keyBoard.textarea.selectionStart;
+            }
+            keyBoard.textarea.focus();
+          });
           break;
 
         case 'ShiftLeft':
