@@ -92,6 +92,10 @@ function createKeys() {
           keyElement.classList.add('keyboard-key-wide');
           keyElement.innerHTML = '<span>Ctrl</span>';
           keyElement.classList.add('ctrl');
+          keyElement.addEventListener('click', () => {
+            keyElement.isPressed = true;
+            keyElement.classList.add('keyboard-key-pressed');
+          });
           break;
 
         case 'Backspace':
@@ -119,12 +123,20 @@ function createKeys() {
           keyElement.classList.add('keyboard-key-wide');
           keyElement.innerHTML = '<span>Shift</span>';
           keyElement.classList.add('shift');
+          keyElement.addEventListener('click', () => {
+            keyElement.isPressed = true;
+            keyElement.classList.add('keyboard-key-pressed');
+          });
           break;
 
         case 'Alt':
           keyElement.classList.add('keyboard-key-wide');
           keyElement.innerHTML = '<span>Alt</span>';
           keyElement.classList.add('alt');
+          keyElement.addEventListener('click', () => {
+            keyElement.isPressed = true;
+            keyElement.classList.add('keyboard-key-pressed');
+          });
           break;
 
         case 'Enter':
