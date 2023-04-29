@@ -187,7 +187,7 @@ function createKeys() {
             const selectionStart = keyBoard.textarea.selectionStart;
             const selectionEnd = keyBoard.textarea.selectionEnd;
             if (keyBoard.capsLock && (document.querySelectorAll('.shift')[0].isPressed || document.querySelectorAll('.shift')[1].isPressed)) {
-              keyBoard.textarea.value = `${keyBoard.textarea.value.slice(0, s)}${key.name.toLowerCase()}${keyBoard.textarea.value.slice(e)}`;
+              keyBoard.textarea.value = `${keyBoard.textarea.value.slice(0, selectionStart)}${key.name.toLowerCase()}${keyBoard.textarea.value.slice(selectionEnd)}`;
             } else if (keyBoard.capsLock || document.querySelectorAll('.shift')[0].isPressed || document.querySelectorAll('.shift')[1].isPressed) {
               keyBoard.textarea.value = `${keyBoard.textarea.value.slice(0, selectionStart)}${key.name.toUpperCase()}${keyBoard.textarea.value.slice(selectionEnd)}`;
             } else {
@@ -206,6 +206,19 @@ function createKeys() {
       shiftSign.classList.add('keyboard-key-shift-sign');
       shiftSign.textContent = key.name.x[1];
       keyElement.appendChild(shiftSign);
+      keyElement.addEventListener('click', () => {
+        const selectionStart = keyBoard.textarea.selectionStart;
+        const selectionEnd = keyBoard.textarea.selectionEnd;
+        if (document.querySelectorAll('.shift')[0].isPressed || document.querySelectorAll('.shift')[1].isPressed) {
+          keyBoard.textarea.value = `${keyBoard.textarea.value.slice(0, selectionStart)}${key.name.x[1]}${keyBoard.textarea.value.slice(selectionEnd)}`;
+          releaseCtrlAltShift();
+        } else {
+          keyBoard.textarea.value = `${keyBoard.textarea.value.slice(0, selectionStart)}${key.name.x[0]}${keyBoard.textarea.value.slice(selectionEnd)}`;
+        }
+        keyBoard.textarea.focus();
+        keyBoard.textarea.selectionStart = selectionStart + 1;
+        keyBoard.textarea.selectionEnd = keyBoard.textarea.selectionStart;
+      });
     }
 
     fragment.appendChild(keyElement);
