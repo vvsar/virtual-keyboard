@@ -12,7 +12,6 @@ class Keyboard {
 
 class Key {
   constructor(name) {
-    document.createElement('button');
     this.name = name;
     this.icon = null;
   }
@@ -68,10 +67,12 @@ function createKeys() {
     const key = new Key(keyName);
     keyElement.classList.add('keyboard-key');
     keyElement.isPressed = false;
-    
     const insertLineBreak = [currentLayout[13], currentLayout[27],
-      currentLayout[40], currentLayout[52]].indexOf(keyName) !== -1;
-
+        currentLayout[40], currentLayout[52]].indexOf(keyName) !== -1;
+    if (keyName !== 'Control' && keyName !== 'Alt' && keyName !== 'ShiftLeft' && keyName !== 'ShiftRight') {
+      keyElement.onmousedown = function() { keyElement.classList.add('keyboard-key-pressed'); };
+      keyElement.onmouseup = function() { keyElement.classList.remove('keyboard-key-pressed'); };
+    }
     if (typeof keyName !== 'object') {
       switch (keyName) {
         case 'Control':
