@@ -183,6 +183,21 @@ function createKeys() {
           } else {
             keyElement.innerText = key.name.toUpperCase();
           }
+          keyElement.addEventListener('click', () => {
+            const selectionStart = keyBoard.textarea.selectionStart;
+            const selectionEnd = keyBoard.textarea.selectionEnd;
+            if (keyBoard.capsLock && (document.querySelectorAll('.shift')[0].isPressed || document.querySelectorAll('.shift')[1].isPressed)) {
+              keyBoard.textarea.value = `${keyBoard.textarea.value.slice(0, s)}${key.name.toLowerCase()}${keyBoard.textarea.value.slice(e)}`;
+            } else if (keyBoard.capsLock || document.querySelectorAll('.shift')[0].isPressed || document.querySelectorAll('.shift')[1].isPressed) {
+              keyBoard.textarea.value = `${keyBoard.textarea.value.slice(0, selectionStart)}${key.name.toUpperCase()}${keyBoard.textarea.value.slice(selectionEnd)}`;
+            } else {
+              keyBoard.textarea.value = `${keyBoard.textarea.value.slice(0, selectionStart)}${key.name.toLowerCase()}${keyBoard.textarea.value.slice(selectionEnd)}`;
+            }
+            releaseCtrlAltShift();
+            keyBoard.textarea.focus();
+            keyBoard.textarea.selectionStart = selectionStart + 1;
+            keyBoard.textarea.selectionEnd = keyBoard.textarea.selectionStart;
+          });
           break;
       }
     } else {
