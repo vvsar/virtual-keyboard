@@ -71,6 +71,17 @@ function toggleCapsLock() {
   });
 }
 
+function releaseCtrlAltShift() {
+  document.querySelectorAll('.shift').forEach((el) => {
+    el.isPressed = false;
+    el.classList.remove('keyboard-key-pressed');
+  });
+  document.querySelector('.ctrl').isPressed = false;
+  document.querySelector('.ctrl').classList.remove('keyboard-key-pressed');
+  document.querySelector('.alt').isPressed = false;
+  document.querySelector('.alt').classList.remove('keyboard-key-pressed');
+}
+
 function createKeys() {
   const fragment = document.createDocumentFragment();
 
