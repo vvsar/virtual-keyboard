@@ -112,6 +112,22 @@ function createKeys() {
         case 'Backspace':
           keyElement.classList.add('keyboard-key-wide');
           keyElement.innerHTML = key.createIcon('backspace');
+          keyElement.addEventListener('click', () => {
+            const selectionStart = keyBoard.textarea.selectionStart;
+            const selectionEnd = keyBoard.textarea.selectionEnd;
+            if (selectionStart === selectionEnd && !(selectionStart === 0 && selectionEnd === 0)) {
+              keyBoard.textarea.value = keyBoard.textarea.value.slice(0, selectionStart - 1)
+                  + keyBoard.textarea.value.slice(selectionEnd);
+              keyBoard.textarea.selectionStart = selectionStart - 1;
+              keyBoard.textarea.selectionEnd = keyBoard.textarea.selectionStart;
+            } else {
+              keyBoard.textarea.value = keyBoard.textarea.value.slice(0, selectionStart)
+                  + keyBoard.textarea.value.slice(selectionEnd);
+              keyBoard.textarea.selectionStart = selectionStart;
+              keyBoard.textarea.selectionEnd = keyBoard.textarea.selectionStart;
+            }
+            keyBoard.textarea.focus();
+          });
           break;
 
         case 'CapsLock':
