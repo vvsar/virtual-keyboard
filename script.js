@@ -185,6 +185,14 @@ function createKeys() {
         case 'Enter':
           keyElement.classList.add('keyboard-key-wide');
           keyElement.innerHTML = key.createIcon('keyboard_return');
+          keyElement.addEventListener('click', () => {
+            const selectionStart = keyBoard.textarea.selectionStart;
+            const selectionEnd = keyBoard.textarea.selectionEnd;
+            keyBoard.textarea.value = `${keyBoard.textarea.value.slice(0, selectionStart)}\n${keyBoard.textarea.value.slice(selectionEnd)}`;
+            keyBoard.textarea.focus();
+            keyBoard.textarea.selectionStart = selectionStart + 1;
+            keyBoard.textarea.selectionEnd = keyBoard.textarea.selectionStart;
+          });
           break;
 
         case 'Space':
