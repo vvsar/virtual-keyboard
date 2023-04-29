@@ -10,6 +10,18 @@ class Keyboard {
   }
 }
 
+class Key {
+  constructor(name) {
+    document.createElement('button');
+    this.name = name;
+    this.icon = null;
+  }
+  createIcon(iconName) {
+    this.icon = `<span class="material-icons">${iconName}</span>`;
+    return this.icon;
+  }
+}
+
 const keySet = {
   en:
   [{ x: ['`', '~'] }, { x: ['1', '!'] }, { x: ['2', '@'] }, { x: ['3', '#'] }, { x: ['4', '$'] }, { x: ['5', '%'] }, { x: ['6', '^'] },
