@@ -53,20 +53,17 @@ function keyboardInit() {
 
   keyBoard.infoLIne = document.createElement('div');
   keyBoard.infoLIne.classList.add('info-line');
-  document.body.appendChild(keyBoard.infoLIne);
   const winLogo = document.createElement('img');
   winLogo.src = './assets/winlogo.png';
   winLogo.alt = 'Windows logo';
   winLogo.classList.add('win-logo');
-  keyBoard.infoLIne.appendChild(winLogo);
-  const langSign = document.createElement('div');
-  langSign.classList.add('lang-sign');
-  langSign.textContent = (`${keyBoard.language}`).toUpperCase();
-  keyBoard.infoLIne.appendChild(langSign);
+  keyBoard.langSign = document.createElement('div');
+  keyBoard.langSign.classList.add('lang-sign');
+  keyBoard.langSign.textContent = (`${keyBoard.language}`).toUpperCase();
   const shiftInfo = document.createElement('span');
   shiftInfo.classList.add('shift-info');
   shiftInfo.textContent = 'En/Ru switch: Ctrl-Shift';
-  keyBoard.infoLIne.appendChild(shiftInfo);
+  keyBoard.infoLIne.append(winLogo, keyBoard.langSign, shiftInfo);
   
   keyBoard.keysContainer = document.createElement('div');
   keyBoard.keysContainer.classList.add('keys-container');
@@ -98,6 +95,22 @@ function releaseCtrlAltShift() {
   document.querySelector('.ctrl').classList.remove('keyboard-key-pressed');
   document.querySelector('.alt').isPressed = false;
   document.querySelector('.alt').classList.remove('keyboard-key-pressed');
+}
+
+function toggleEnRu() {
+  if (keyBoard.language === 'en') {
+    keyBoard.language = 'ru';
+    localStorage.setItem('language', 'ru');
+  } else {
+    keyBoard.language = 'en';
+    localStorage.setItem('language', 'en');
+  }
+  // const langSign = document.querySelector('.lang-sign');
+  keyBoard.langSign.textContent = (`${keyBoard.language}`).toUpperCase();
+  while (keyBoard.keysContainer.firstChild) {
+    keyBoard.keysContainer.firstChild.remove();
+  }
+  keyBoard.keysContainer.appendChild(createKeys());
 }
 
 function createKeys() {
@@ -185,8 +198,15 @@ function createKeys() {
           keyElement.innerHTML = '<span>Shift</span>';
           keyElement.classList.add('shift');
           keyElement.addEventListener('click', () => {
-            keyElement.isPressed = true;
-            keyElement.classList.add('keyboard-key-pressed');
+            if (document.querySelector('.ctrl').isPressed) {
+              keyElement.onmousedown = function() { keyElement.classList.add('keyboard-key-pressed'); };
+              keyElement.onmouseup = function() { keyElement.classList.remove('keyboard-key-pressed'); };
+              toggleEnRu();
+              releaseCtrlAltShift();
+            } else {
+              keyElement.isPressed = true;
+              keyElement.classList.add('keyboard-key-pressed');
+            }
           });
           break;
 
