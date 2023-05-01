@@ -158,6 +158,7 @@ function createKeys() {
           keyElement.addEventListener('click', () => {
             keyElement.isPressed = true;
             keyElement.classList.add('keyboard-key-pressed');
+            keyBoard.textarea.focus();
           });
           break;
 
@@ -228,6 +229,7 @@ function createKeys() {
               keyElement.isPressed = true;
               keyElement.classList.add('keyboard-key-pressed');
             }
+            keyBoard.textarea.focus();
           });
           break;
 
@@ -238,6 +240,7 @@ function createKeys() {
           keyElement.addEventListener('click', () => {
             keyElement.isPressed = true;
             keyElement.classList.add('keyboard-key-pressed');
+            keyBoard.textarea.focus();
           });
           break;
 
@@ -251,6 +254,7 @@ function createKeys() {
             keyBoard.textarea.focus();
             keyBoard.textarea.selectionStart = selectionStart + 1;
             keyBoard.textarea.selectionEnd = keyBoard.textarea.selectionStart;
+            keyBoard.textarea.focus();
           });
           break;
 
@@ -301,9 +305,9 @@ function createKeys() {
               keyBoard.textarea.value = `${keyBoard.textarea.value.slice(0, selectionStart)}${key.name.toLowerCase()}${keyBoard.textarea.value.slice(selectionEnd)}`;
             }
             releaseCtrlAltShift();
-            keyBoard.textarea.focus();
             keyBoard.textarea.selectionStart = selectionStart + 1;
             keyBoard.textarea.selectionEnd = keyBoard.textarea.selectionStart;
+            keyBoard.textarea.focus();
           });
           break;
       }
@@ -322,9 +326,9 @@ function createKeys() {
         } else {
           keyBoard.textarea.value = `${keyBoard.textarea.value.slice(0, selectionStart)}${key.name.x[0]}${keyBoard.textarea.value.slice(selectionEnd)}`;
         }
-        keyBoard.textarea.focus();
         keyBoard.textarea.selectionStart = selectionStart + 1;
         keyBoard.textarea.selectionEnd = keyBoard.textarea.selectionStart;
+        keyBoard.textarea.focus();
       });
     }
 
