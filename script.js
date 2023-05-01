@@ -129,7 +129,7 @@ function createKeys() {
     const key = new Key(keyName);
     keyElement.classList.add('keyboard-key');
     keyElement.isPressed = false;
-    keyElement.code = keySet.codes[keySet[currentLayout].indexOf(keyName)];
+    keyElement.code = keySet.codes[currentLayout.indexOf(keyName)];
     const insertLineBreak = [currentLayout[13], currentLayout[27],
         currentLayout[40], currentLayout[52]].indexOf(keyName) !== -1;
     if (keyName !== 'Control' && keyName !== 'Alt' && keyName !== 'ShiftLeft' && keyName !== 'ShiftRight') {
@@ -323,5 +323,24 @@ function createKeys() {
 
   return fragment;
 }
+
+window.addEventListener('keydown', (event) => {
+  event.preventDefault();
+  keyBoard.keysContainer.childNodes.forEach((el) => {
+    if (el.code === event.code) {
+      el.classList.add('keyboard-key-highlighted');
+      el.click();
+    }
+  });
+});
+
+window.addEventListener('keyup', (event) => {
+  event.preventDefault();
+  keyBoard.keysContainer.childNodes.forEach((el) => {
+    if (el.code === event.code) {
+      el.classList.remove('keyboard-key-highlighted');
+    }
+  });
+});
 
 keyboardInit();
