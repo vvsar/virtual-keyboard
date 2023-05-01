@@ -129,6 +129,7 @@ function createKeys() {
     const key = new Key(keyName);
     keyElement.classList.add('keyboard-key');
     keyElement.isPressed = false;
+    keyElement.code = keySet.codes[keySet[currentLayout].indexOf(keyName)];
     const insertLineBreak = [currentLayout[13], currentLayout[27],
         currentLayout[40], currentLayout[52]].indexOf(keyName) !== -1;
     if (keyName !== 'Control' && keyName !== 'Alt' && keyName !== 'ShiftLeft' && keyName !== 'ShiftRight') {
