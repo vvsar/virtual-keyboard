@@ -25,9 +25,45 @@ body {
   resize: none;
 }
 
+.info-line {
+  width: 90%;
+  margin: 0 auto;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: transparent;
+}
+
+.win-logo {
+  display: block;
+  width: 120px;
+}
+
+.lang-sign {
+  width: 35px;
+  height: 30px;
+  border-radius: 5px;
+  text-align: center;
+  background: #00FF00;
+  color: #FF4500;
+  border: solid 3px #696969;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 160%;
+}
+
+.shift-info {
+  font-family: Arial, sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  color: #4169E1;
+}
+
 .keys-container {
   width: 100%;
-  padding: 50px 0;
+  padding: 20px 0;
   text-align: center;
   user-select: none;
 }

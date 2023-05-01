@@ -50,11 +50,28 @@ function keyboardInit() {
 
   keyBoard.textarea = document.createElement('textarea');
   keyBoard.textarea.classList.add('text-input');
+
+  keyBoard.infoLIne = document.createElement('div');
+  keyBoard.infoLIne.classList.add('info-line');
+  document.body.appendChild(keyBoard.infoLIne);
+  const winLogo = document.createElement('img');
+  winLogo.src = './assets/winlogo.png';
+  winLogo.alt = 'Windows logo';
+  winLogo.classList.add('win-logo');
+  keyBoard.infoLIne.appendChild(winLogo);
+  const langSign = document.createElement('div');
+  langSign.classList.add('lang-sign');
+  langSign.textContent = (`${keyBoard.language}`).toUpperCase();
+  keyBoard.infoLIne.appendChild(langSign);
+  const shiftInfo = document.createElement('span');
+  shiftInfo.classList.add('shift-info');
+  shiftInfo.textContent = 'En/Ru switch: Ctrl-Shift';
+  keyBoard.infoLIne.appendChild(shiftInfo);
   
   keyBoard.keysContainer = document.createElement('div');
   keyBoard.keysContainer.classList.add('keys-container');
   
-  document.body.append(keyBoard.textarea, keyBoard.keysContainer)
+  document.body.append(keyBoard.textarea, keyBoard.infoLIne, keyBoard.keysContainer)
   keyBoard.keysContainer.appendChild(createKeys());
   keyBoard.textarea.focus();
 }
