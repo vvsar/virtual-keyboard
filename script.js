@@ -273,10 +273,37 @@ function createKeys() {
 
         case 'ArrowLeft':
           keyElement.innerHTML = key.createIcon('arrow_back');
+          keyElement.addEventListener('click', () => {
+            const selectionStart = keyBoard.textarea.selectionStart;
+            const selectionEnd = keyBoard.textarea.selectionEnd;
+            if (selectionStart === 0 && selectionEnd === 0) keyBoard.textarea.focus();
+            if (selectionStart === selectionEnd) {
+              keyBoard.textarea.selectionStart = selectionStart - 1;
+              keyBoard.textarea.selectionEnd = keyBoard.textarea.selectionStart;
+            } else {
+              keyBoard.textarea.selectionStart = selectionStart;
+              keyBoard.textarea.selectionEnd = keyBoard.textarea.selectionStart;
+            }
+            releaseCtrlAltShift();
+            keyBoard.textarea.focus();
+          });
           break;
 
         case 'ArrowRight':
           keyElement.innerHTML = key.createIcon('arrow_forward');
+          keyElement.addEventListener('click', () => {
+            const selectionStart = keyBoard.textarea.selectionStart;
+            const selectionEnd = keyBoard.textarea.selectionEnd;
+            if (selectionStart === selectionEnd) {
+              keyBoard.textarea.selectionStart = selectionStart + 1;
+              keyBoard.textarea.selectionEnd = keyBoard.textarea.selectionStart;
+            } else {
+              keyBoard.textarea.selectionEnd = selectionEnd;
+              keyBoard.textarea.selectionStart = keyBoard.textarea.selectionEnd;
+            }
+            releaseCtrlAltShift();
+            keyBoard.textarea.focus();
+          });
           break;
 
         case 'ArrowUp':
