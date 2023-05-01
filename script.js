@@ -25,22 +25,22 @@ const keySet = {
   en:
   [{ x: ['`', '~'] }, { x: ['1', '!'] }, { x: ['2', '@'] }, { x: ['3', '#'] }, { x: ['4', '$'] }, { x: ['5', '%'] }, { x: ['6', '^'] },
     { x: ['7', '&'] }, { x: ['8', '*'] }, { x: ['9', '('] }, { x: ['0', ')'] }, { x: ['-', '_'] }, { x: ['=', '+'] }, 'Backspace',
-    'CapsLock', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', { x: ['[', '{'] }, { x: [']', '}'] }, 'Del',
-    'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', { x: [';', ':'] }, { x: ['\'', '"'] }, { x: ['\\', '|'] }, 'Enter',
+    'Tab', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', { x: ['[', '{'] }, { x: [']', '}'] }, 'Del',
+    'CapsLock', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', { x: [';', ':'] }, { x: ['\'', '"'] }, { x: ['\\', '|'] }, 'Enter',
     'ShiftLeft', 'z', 'x', 'c', 'v', 'b', 'n', 'm', { x: [',', '<'] }, { x: ['.', '>'] }, { x: ['/', '?'] }, 'ShiftRight',
     'Control', 'Alt', 'Space', 'ArrowLeft', 'ArrowUp', 'ArrowRight', 'ArrowDown'],
   ru:
   ['ё', { x: ['1', '!'] }, { x: ['2', '"'] }, { x: ['3', '№'] }, { x: ['4', ';'] }, { x: ['5', '%'] }, { x: ['6', ':'] },
     { x: ['7', '?'] }, { x: ['8', '*'] }, { x: ['9', '('] }, { x: ['0', ')'] }, { x: ['-', '_'] }, { x: ['=', '+'] }, 'Backspace',
-    'CapsLock', 'й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', 'х', 'ъ', 'Del',
-    'ф', 'ы', 'в', 'а', 'п', 'р', 'о', 'л', 'д', 'ж', 'э', { x: ['\\', '/'] }, 'Enter',
+    'Tab', 'й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', 'х', 'ъ', 'Del',
+    'CapsLock', 'ф', 'ы', 'в', 'а', 'п', 'р', 'о', 'л', 'д', 'ж', 'э', { x: ['\\', '/'] }, 'Enter',
     'ShiftLeft', 'я', 'ч', 'с', 'м', 'и', 'т', 'ь', 'б', 'ю', { x: ['.', ','] }, 'ShiftRight',
     'Control', 'Alt', 'Space', 'ArrowLeft', 'ArrowUp', 'ArrowRight', 'ArrowDown'],
   codes:
   ['Backquote', 'Digit1', 'Digit2', 'Digit3', 'Digit4', 'Digit5', 'Digit6',
     'Digit7', 'Digit8', 'Digit9', 'Digit0', 'Minus', 'Equal', 'Backspace',
-    'CapsLock', 'KeyQ', 'KeyW', 'KeyE', 'KeyR', 'KeyT', 'KeyY', 'KeyU', 'KeyI', 'KeyO', 'KeyP', 'BracketLeft', 'BracketRight', 'Delete',
-    'KeyA', 'KeyS', 'KeyD', 'KeyF', 'KeyG', 'KeyH', 'KeyJ', 'KeyK', 'KeyL', 'Semicolon', 'Quote', 'Backslash', 'Enter',
+    'Tab', 'KeyQ', 'KeyW', 'KeyE', 'KeyR', 'KeyT', 'KeyY', 'KeyU', 'KeyI', 'KeyO', 'KeyP', 'BracketLeft', 'BracketRight', 'Delete',
+    'CapsLock', 'KeyA', 'KeyS', 'KeyD', 'KeyF', 'KeyG', 'KeyH', 'KeyJ', 'KeyK', 'KeyL', 'Semicolon', 'Quote', 'Backslash', 'Enter',
     'ShiftLeft', 'KeyZ', 'KeyX', 'KeyC', 'KeyV', 'KeyB', 'KeyN', 'KeyM', 'Comma', 'Period', 'Slash', 'ShiftRight',
     'ControlLeft', 'AltLeft', 'Space', 'ArrowLeft', 'ArrowUp', 'ArrowRight', 'ArrowDown'],
 };
@@ -131,13 +131,26 @@ function createKeys() {
     keyElement.isPressed = false;
     keyElement.code = keySet.codes[currentLayout.indexOf(keyName)];
     const insertLineBreak = [currentLayout[13], currentLayout[27],
-        currentLayout[40], currentLayout[52]].indexOf(keyName) !== -1;
+        currentLayout[41], currentLayout[53]].indexOf(keyName) !== -1;
     if (keyName !== 'Control' && keyName !== 'Alt' && keyName !== 'ShiftLeft' && keyName !== 'ShiftRight') {
       keyElement.onmousedown = function() { keyElement.classList.add('keyboard-key-pressed'); };
       keyElement.onmouseup = function() { keyElement.classList.remove('keyboard-key-pressed'); };
     }
     if (typeof keyName !== 'object') {
       switch (keyName) {
+        case 'Tab':
+          keyElement.classList.add('keyboard-key-wide');
+          keyElement.innerHTML = key.createIcon('tab');
+          keyElement.addEventListener('click', () => {
+            const selectionStart = keyBoard.textarea.selectionStart;
+            const selectionEnd = keyBoard.textarea.selectionEnd;
+            keyBoard.textarea.value = `${keyBoard.textarea.value.slice(0, selectionStart)}    ${keyBoard.textarea.value.slice(selectionEnd)}`;
+            keyBoard.textarea.selectionStart = selectionStart + 4;
+            keyBoard.textarea.selectionEnd = keyBoard.textarea.selectionStart;
+            keyBoard.textarea.focus();
+          });
+          break;
+
         case 'Control':
           keyElement.classList.add('keyboard-key-wide');
           keyElement.innerHTML = '<span>Ctrl</span>';
