@@ -314,20 +314,45 @@ function createKeys() {
 
         case 'ArrowDown':
           keyElement.innerHTML = key.createIcon('arrow_downward');
-          // keyElement.addEventListener('click', () => {
-          //   const selectionEnd = keyBoard.textarea.selectionEnd;
-          //   let inRowCursorPosition;
-          //   if (keyBoard.textarea.value.lastIndexOf('\n', selectionEnd) !== -1) {
-          //     inRowCursorPosition = keyBoard.textarea.value.lastIndexOf('\n', selectionEnd);
-          //   } else {
-          //     inRowCursorPosition = selectionEnd;
-          //   }
-            
-          //   if (keyBoard.textarea.value.indexOf('\n', selectionEnd) !== -1) {
-          //     keyBoard.textarea.selectionEnd = keyBoard.textarea.value.indexOf('\n', selectionEnd) + inRowCursorPosition + 1;
-          //     keyBoard.textarea.selectionStart = keyBoard.textarea.selectionEnd;
-          //   }
-          // });
+          keyElement.addEventListener('click', () => {
+            const selectionEnd = keyBoard.textarea.selectionEnd;
+            let inRowCursorPosition;
+            let previousLineBreak;
+            let nextLineBreak = keyBoard.textarea.value.indexOf('\n', selectionEnd);
+            let nextNextLineBreak = keyBoard.textarea.value.indexOf('\n', nextLineBreak + 1);
+            if (keyBoard.textarea.value.lastIndexOf('\n', selectionEnd) < 0) {
+              previousLineBreak = 0;
+              inRowCursorPosition = selectionEnd;
+            } else if (selectionEnd === keyBoard.textarea.value.lastIndexOf('\n', selectionEnd)) {
+              previousLineBreak = keyBoard.textarea.value.lastIndexOf('\n', selectionEnd - 1) + 1;
+              if (previousLineBreak < 0) {
+                previousLineBreak = 0
+              }
+              inRowCursorPosition = selectionEnd - previousLineBreak;
+            } else {
+              previousLineBreak = keyBoard.textarea.value.lastIndexOf('\n', selectionEnd);
+              inRowCursorPosition = selectionEnd - previousLineBreak - 1;
+            }
+            console.log(inRowCursorPosition, nextLineBreak, nextNextLineBreak);
+            if (nextLineBreak >= 0) {
+              if (nextNextLineBreak >= 0) {
+                if (inRowCursorPosition < nextNextLineBreak - nextLineBreak) {
+                  keyBoard.textarea.selectionEnd = nextLineBreak + inRowCursorPosition + 1;
+                } else {
+                  keyBoard.textarea.selectionEnd = nextNextLineBreak;
+                }
+              } else {
+                if (inRowCursorPosition < keyBoard.textarea.value.length - nextLineBreak) {
+                  keyBoard.textarea.selectionEnd = nextLineBreak + inRowCursorPosition + 1;
+                } else {
+                  keyBoard.textarea.selectionEnd = keyBoard.textarea.value.length;
+                }
+              }
+              keyBoard.textarea.selectionStart = keyBoard.textarea.selectionEnd;
+            }
+            releaseCtrlAltShift();
+            keyBoard.textarea.focus();
+          });
           break;
 
         default:
@@ -404,4 +429,4 @@ window.addEventListener('keyup', (event) => {
 
 keyboardInit();
 
-alert('Работа над кнопками ArrowUp и ArrowDown продолжается.');
+alert('Работа над кнопкой ArrowUp продолжается.');
