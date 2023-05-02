@@ -429,4 +429,4 @@ window.addEventListener('keyup', (event) => {
 
 keyboardInit();
 
-alert('Работа над кнопками ArrowUp и ArrowDown продолжается.');
+alert('Работа над кнопкой ArrowUp продолжается.');
