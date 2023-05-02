@@ -308,11 +308,27 @@ function createKeys() {
 
         case 'ArrowUp':
           keyElement.innerHTML = key.createIcon('arrow_upward');
-          
+          keyElement.addEventListener('click', () => {
+            
+          });
           break;
 
         case 'ArrowDown':
           keyElement.innerHTML = key.createIcon('arrow_downward');
+          // keyElement.addEventListener('click', () => {
+          //   const selectionEnd = keyBoard.textarea.selectionEnd;
+          //   let inRowCursorPosition;
+          //   if (keyBoard.textarea.value.lastIndexOf('\n', selectionEnd) !== -1) {
+          //     inRowCursorPosition = keyBoard.textarea.value.lastIndexOf('\n', selectionEnd);
+          //   } else {
+          //     inRowCursorPosition = selectionEnd;
+          //   }
+            
+          //   if (keyBoard.textarea.value.indexOf('\n', selectionEnd) !== -1) {
+          //     keyBoard.textarea.selectionEnd = keyBoard.textarea.value.indexOf('\n', selectionEnd) + inRowCursorPosition + 1;
+          //     keyBoard.textarea.selectionStart = keyBoard.textarea.selectionEnd;
+          //   }
+          // });
           break;
 
         default:
@@ -388,3 +404,5 @@ window.addEventListener('keyup', (event) => {
 });
 
 keyboardInit();
+
+alert('Работа над кнопками ArrowUp и ArrowDown продолжается.');
