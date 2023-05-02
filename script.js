@@ -112,7 +112,6 @@ function toggleEnRu() {
     keyBoard.language = 'en';
     localStorage.setItem('language', 'en');
   }
-  // const langSign = document.querySelector('.lang-sign');
   keyBoard.langSign.textContent = (`${keyBoard.language}`).toUpperCase();
   while (keyBoard.keysContainer.firstChild) {
     keyBoard.keysContainer.firstChild.remove();
