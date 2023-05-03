@@ -308,7 +308,33 @@ function createKeys() {
         case 'ArrowUp':
           keyElement.innerHTML = key.createIcon('arrow_upward');
           keyElement.addEventListener('click', () => {
-            
+            const selectionStart = keyBoard.textarea.selectionStart;
+            let inRowCursorPosition;
+            let previousLineBreak;
+            let previousPreviousLineBreak;
+            if (selectionStart === keyBoard.textarea.value.lastIndexOf('\n', selectionStart)) {
+              previousLineBreak = keyBoard.textarea.value.lastIndexOf('\n', selectionStart - 1) + 1;
+              inRowCursorPosition = selectionStart - previousLineBreak;
+            } else {
+              previousLineBreak = keyBoard.textarea.value.lastIndexOf('\n', selectionStart);
+              inRowCursorPosition = selectionStart - previousLineBreak - 1;
+            }
+            if (previousLineBreak < 0) {
+              return;
+            }
+            previousPreviousLineBreak = keyBoard.textarea.value.lastIndexOf('\n', previousLineBreak - 1);
+            // if (inRowCursorPosition > keyBoard.textarea.cols) {
+            //   keyBoard.textarea.selectionStart -= keyBoard.textarea.cols;
+            // }
+            console.log(inRowCursorPosition, previousLineBreak, previousPreviousLineBreak);
+            if (inRowCursorPosition < previousLineBreak - previousPreviousLineBreak) {
+              keyBoard.textarea.selectionStart = previousPreviousLineBreak + inRowCursorPosition + 1;
+            } else {
+              keyBoard.textarea.selectionStart = previousLineBreak - 1;
+            }
+            keyBoard.textarea.selectionEnd = keyBoard.textarea.selectionStart;
+            releaseCtrlAltShift();
+            keyBoard.textarea.focus();
           });
           break;
 
