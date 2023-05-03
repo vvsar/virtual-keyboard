@@ -315,24 +315,20 @@ function createKeys() {
             let previousLineBreak;
             let previousPreviousLineBreak;
             if (selectionStart === keyBoard.textarea.value.lastIndexOf('\n', selectionStart)) {
-              previousLineBreak = keyBoard.textarea.value.lastIndexOf('\n', selectionStart - 1) + 1;
-              inRowCursorPosition = selectionStart - previousLineBreak;
+              previousLineBreak = keyBoard.textarea.value.lastIndexOf('\n', selectionStart - 1);
             } else {
               previousLineBreak = keyBoard.textarea.value.lastIndexOf('\n', selectionStart);
-              inRowCursorPosition = selectionStart - previousLineBreak - 1;
             }
+            inRowCursorPosition = selectionStart - previousLineBreak - 1;
             if (previousLineBreak < 0) {
               return;
             }
             previousPreviousLineBreak = keyBoard.textarea.value.lastIndexOf('\n', previousLineBreak - 1);
-            // if (inRowCursorPosition > keyBoard.textarea.cols) {
-            //   keyBoard.textarea.selectionStart -= keyBoard.textarea.cols;
-            // }
             console.log(inRowCursorPosition, previousLineBreak, previousPreviousLineBreak);
             if (inRowCursorPosition < previousLineBreak - previousPreviousLineBreak) {
               keyBoard.textarea.selectionStart = previousPreviousLineBreak + inRowCursorPosition + 1;
             } else {
-              keyBoard.textarea.selectionStart = previousLineBreak - 1;
+              keyBoard.textarea.selectionStart = previousLineBreak;
             }
             keyBoard.textarea.selectionEnd = keyBoard.textarea.selectionStart;
             releaseCtrlAltShift();
