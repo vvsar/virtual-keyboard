@@ -134,6 +134,7 @@ function createKeys() {
     if (keyName !== 'Control' && keyName !== 'Alt' && keyName !== 'ShiftLeft' && keyName !== 'ShiftRight') {
       keyElement.onmousedown = function() { keyElement.classList.add('keyboard-key-pressed'); };
       keyElement.onmouseup = function() { keyElement.classList.remove('keyboard-key-pressed'); };
+      keyElement.onmouseleave = function() { keyElement.classList.remove('keyboard-key-pressed'); };
     }
     if (typeof keyName !== 'object') {
       switch (keyName) {
@@ -222,6 +223,7 @@ function createKeys() {
             if (document.querySelector('.ctrl').isPressed) {
               keyElement.onmousedown = function() { keyElement.classList.add('keyboard-key-pressed'); };
               keyElement.onmouseup = function() { keyElement.classList.remove('keyboard-key-pressed'); };
+              keyElement.onmouseleave = function() { keyElement.classList.remove('keyboard-key-pressed'); };
               toggleEnRu();
               releaseCtrlAltShift();
             } else {
