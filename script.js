@@ -324,7 +324,6 @@ function createKeys() {
               return;
             }
             previousPreviousLineBreak = keyBoard.textarea.value.lastIndexOf('\n', previousLineBreak - 1);
-            console.log(inRowCursorPosition, previousLineBreak, previousPreviousLineBreak);
             if (inRowCursorPosition < previousLineBreak - previousPreviousLineBreak) {
               keyBoard.textarea.selectionStart = previousPreviousLineBreak + inRowCursorPosition + 1;
             } else {
@@ -357,7 +356,6 @@ function createKeys() {
               previousLineBreak = keyBoard.textarea.value.lastIndexOf('\n', selectionEnd);
               inRowCursorPosition = selectionEnd - previousLineBreak - 1;
             }
-            console.log(inRowCursorPosition, nextLineBreak, nextNextLineBreak);
             if (nextLineBreak >= 0) {
               if (nextNextLineBreak >= 0) {
                 if (inRowCursorPosition < nextNextLineBreak - nextLineBreak) {
@@ -452,5 +450,3 @@ window.addEventListener('keyup', (event) => {
 });
 
 keyboardInit();
-
-alert('Работа над кнопкой ArrowUp продолжается.');
