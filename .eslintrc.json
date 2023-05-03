@@ -4,12 +4,13 @@
         "commonjs": true,
         "es2021": true
     },
-    "extends": "eslint:recommended",
+    "extends": "airbnb",
     "overrides": [
     ],
     "parserOptions": {
         "ecmaVersion": "latest"
     },
     "rules": {
+        "linebreak-style": ["error", process.platform === "win32" ? "windows" : "unix"],
     }
 }

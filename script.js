@@ -134,6 +134,7 @@ function createKeys() {
     if (keyName !== 'Control' && keyName !== 'Alt' && keyName !== 'ShiftLeft' && keyName !== 'ShiftRight') {
       keyElement.onmousedown = function() { keyElement.classList.add('keyboard-key-pressed'); };
       keyElement.onmouseup = function() { keyElement.classList.remove('keyboard-key-pressed'); };
+      keyElement.onmouseleave = function() { keyElement.classList.remove('keyboard-key-pressed'); };
     }
     if (typeof keyName !== 'object') {
       switch (keyName) {
@@ -222,6 +223,7 @@ function createKeys() {
             if (document.querySelector('.ctrl').isPressed) {
               keyElement.onmousedown = function() { keyElement.classList.add('keyboard-key-pressed'); };
               keyElement.onmouseup = function() { keyElement.classList.remove('keyboard-key-pressed'); };
+              keyElement.onmouseleave = function() { keyElement.classList.remove('keyboard-key-pressed'); };
               toggleEnRu();
               releaseCtrlAltShift();
             } else {
@@ -308,7 +310,28 @@ function createKeys() {
         case 'ArrowUp':
           keyElement.innerHTML = key.createIcon('arrow_upward');
           keyElement.addEventListener('click', () => {
-            
+            const selectionStart = keyBoard.textarea.selectionStart;
+            let inRowCursorPosition;
+            let previousLineBreak;
+            let previousPreviousLineBreak;
+            if (selectionStart === keyBoard.textarea.value.lastIndexOf('\n', selectionStart)) {
+              previousLineBreak = keyBoard.textarea.value.lastIndexOf('\n', selectionStart - 1);
+            } else {
+              previousLineBreak = keyBoard.textarea.value.lastIndexOf('\n', selectionStart);
+            }
+            inRowCursorPosition = selectionStart - previousLineBreak - 1;
+            if (previousLineBreak < 0) {
+              return;
+            }
+            previousPreviousLineBreak = keyBoard.textarea.value.lastIndexOf('\n', previousLineBreak - 1);
+            if (inRowCursorPosition < previousLineBreak - previousPreviousLineBreak) {
+              keyBoard.textarea.selectionStart = previousPreviousLineBreak + inRowCursorPosition + 1;
+            } else {
+              keyBoard.textarea.selectionStart = previousLineBreak;
+            }
+            keyBoard.textarea.selectionEnd = keyBoard.textarea.selectionStart;
+            releaseCtrlAltShift();
+            keyBoard.textarea.focus();
           });
           break;
 
@@ -333,7 +356,6 @@ function createKeys() {
               previousLineBreak = keyBoard.textarea.value.lastIndexOf('\n', selectionEnd);
               inRowCursorPosition = selectionEnd - previousLineBreak - 1;
             }
-            console.log(inRowCursorPosition, nextLineBreak, nextNextLineBreak);
             if (nextLineBreak >= 0) {
               if (nextNextLineBreak >= 0) {
                 if (inRowCursorPosition < nextNextLineBreak - nextLineBreak) {
@@ -428,5 +450,3 @@ window.addEventListener('keyup', (event) => {
 });
 
 keyboardInit();
-
-alert('Работа над кнопкой ArrowUp продолжается.');
