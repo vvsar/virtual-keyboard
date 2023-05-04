@@ -11,6 +11,12 @@
         "ecmaVersion": "latest"
     },
     "rules": {
-        "linebreak-style": ["error", process.platform === "win32" ? "windows" : "unix"],
+        "linebreak-style": ["error", "windows"],
+        "max-classes-per-file": ["error", 2],
+        "no-param-reassign": ["error", { "props": false }],
+        "no-use-before-define": ["error", {
+            "functions": false
+        }],
+        "prefer-destructuring": ["error", {"object": false, "array": false}]
     }
 }
